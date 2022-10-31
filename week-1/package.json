@@ -1,0 +1,26 @@
+{
+  "name": "wt-week-one",
+  "version": "1.0.0",
+  "description": "excercises",
+  "main": "script.js",
+  "scripts": {
+    "start": "nodemon script.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "lodash": "^4.17.21"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EmilSuuronen/wt-assignments.git"
+  },
+  "author": "Emil Suuronen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/EmilSuuronen/wt-assignments/issues"
+  },
+  "homepage": "https://github.com/EmilSuuronen/wt-assignments#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}
