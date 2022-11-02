@@ -1,20 +1,17 @@
 'use strict';
 const userModel =  require('../models/userModel');
+const catModel = require("../models/catModel");
 
 const users = userModel.users;
 
-const getUsers = (req, res) => {
-    users.map(user => {
-        delete user.password;
-        return user;
-    });
+const getUsers = async (req, res) => {
+    const users = await userModel.getAllUsers(res);
     res.json(users);
 };
 
-const getUser = (req, res) => {
-    const user = users.filter(user => req.params.userId == user.id)[0];
+const getUser = async (req, res) => {
+    const cat = await userModel.getUserById(res, req.params.userId);
     if (user) {
-        delete user.password;
         res.json(user);
     } else {
         res.sendStatus(404);
