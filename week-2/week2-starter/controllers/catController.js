@@ -1,5 +1,6 @@
 'use strict';
 const catModel = require('../models/catModel');
+const userModel = require("../models/userModel");
 
 const getCats = async (req, res) => {
     const cats = await catModel.getAllCats(res);
@@ -16,12 +17,28 @@ const getCat = async (req, res) => {
     }
 };
 
-const createCat = (req, res) => {
-    console.log(req.body);
-    res.send('adding a cat');
+const createCat = async (req, res) => {
+    const catInfo = req.body
+    if (catInfo) {
+        res.json(catInfo);
+        await catModel.addCat(catInfo);
+    } else {
+        res.sendStatus(404);
+    }
+    console.log(catInfo);
 };
 
-const modifyCat = (req, res) => {};
+const modifyCat = async (req, res) => {
+    const catInfo = req.body
+    if (catInfo) {
+        res.json(catInfo);
+        await catModel.updateCat(catInfo);
+    } else {
+        res.sendStatus(404);
+    }
+    console.log(catInfo);
+};
+
 const deleteCat = (req, res) => {};
 
 module.exports = {

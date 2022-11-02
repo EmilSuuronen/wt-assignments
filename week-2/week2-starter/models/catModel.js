@@ -25,7 +25,29 @@ const getCatById = async (res, catId) => {
   }
 };
 
+const addCat = async (catInfo) => {
+  try {
+    await promisePool.query("INSERT INTO wop_cat (name, weight, owner, filename, birthdate) VALUES (?,?,?,?,?)",
+        [catInfo.name, catInfo.weight, catInfo.owner,catInfo.filename, catInfo.birthdate] );
+  } catch (e) {
+    console.error("error", e.message);
+    // res.status(500).send(e.message)
+  }
+}
+
+const updateCat = async (catInfo) => {
+  try {
+    await promisePool.query("UPDATE wop_cat SET (cat_id = ?, name = ?, weight = ?, owner = ?, birthdate = ?) VALUES (?,?,?,?,?)",
+        [catInfo.id, catInfo.name, catInfo.weight, catInfo.owner, catInfo.birthdate] );
+  } catch (e) {
+    console.error("error", e.message);
+    // res.status(500).send(e.message)
+  }
+}
+
 module.exports = {
   getAllCats,
-  getCatById
+  getCatById,
+  addCat,
+  updateCat
 };
