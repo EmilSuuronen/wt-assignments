@@ -14,7 +14,7 @@ const getAllUsers = async (res) => {
   }
 };
 
-const getUserById = async (res, userId) => {
+const getUser = async (res, userId) => {
   try {
     const [rows] =
         await promisePool.query("SELECT * FROM wop_user WHERE user_id = ?", [userId]);
@@ -25,7 +25,20 @@ const getUserById = async (res, userId) => {
   }
 };
 
+const addUser = async (userInfo) => {
+  try {
+    console.log(userInfo.name, userInfo.passwd + "test output")
+    await promisePool.query("INSERT INTO wop_user (name, email, password, role) VALUES (?,?,?,?)",
+        [userInfo.name, userInfo.email, userInfo.passwd, 21] );
+
+  } catch (e) {
+  console.error("error", e.message);
+  // res.status(500).send(e.message)
+  }
+}
+
 module.exports = {
   getAllUsers,
-  getUserById
+  getUser,
+  addUser
 };

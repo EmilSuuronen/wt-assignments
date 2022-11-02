@@ -10,7 +10,7 @@ const getUsers = async (req, res) => {
 };
 
 const getUser = async (req, res) => {
-    const cat = await userModel.getUserById(res, req.params.userId);
+    const user = await userModel.getUser(res, req.params.userId);
     if (user) {
         res.json(user);
     } else {
@@ -18,10 +18,15 @@ const getUser = async (req, res) => {
     }
 };
 
-const createUser = (req, res) => {
-    const userInfo = `username: ${req.body.name}, email: ${req.body.email}`;
-    res.send('Adding new user ' + userInfo);
-    // TODO: add new user to DB
+const createUser = async (req, res) => {
+    const userInfo = req.body
+    if (userInfo) {
+        res.json(userInfo);
+        await userModel.addUser(userInfo);
+    } else {
+        res.sendStatus(404);
+    }
+    console.log(userInfo);
 };
 
 const modifyUser = (req, res) => {};
