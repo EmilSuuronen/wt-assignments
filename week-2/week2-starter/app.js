@@ -4,12 +4,14 @@ const app = express();
 const cors = require('cors');
 const port = 3000;
 const catRouter = require('./routes/catRoute');
+const userRouter = require('./routes/userRoute');
+
+app.use(express.json());
+app.use(cors());
+app.use(express.urlencoded({ extended: true }));
 
 app.use('/cat', catRouter);
-
-app.get('/users', (req, res) => {
-  res.send('From here you can view users.')
-});
+app.use('/user', userRouter);
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 
