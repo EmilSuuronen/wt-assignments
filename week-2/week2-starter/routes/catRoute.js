@@ -1,38 +1,25 @@
 // catRoute
 
-"use strict";
-const express = require("express");
-const router = express.Router();
-const catController = require("../controllers/catController");
-const multer = require('multer')
+'use strict';
+// catRoutes
+const express = require('express');
+const router = express.Router()
+const multer = require('multer');
+const catController = require('../controllers/catController');
 
-const upload = multer({dest: 'uploads/'})
+const upload = multer({dest: 'uploads/'});
 
-router.get("/", catController.getCats);
+router.get('/', catController.getCats);
 
-router.post("/" )
+router.get('/:catId', catController.getCat);
 
-router.get('/', (req, res) => {
-    res.send('From this endpoint you can get cats.')
-});
-
-router.get('/:catId', (req, res) => {
-    res.send('From this endpoint you can get cats with id of ' + req.params.catId)
-});
-
-router.post('/', (req, res) => {
-    console.log(req)
-    res.send('From this endpoint you can add cats.')
-});
+router.post('/', upload.single('cat'), catController.createCat);
 
 router.put('/', (req, res) => {
-    console.log(req)
-    res.send('From this endpoint you can edit cats.')
+    res.send('From this endpoint you can edit cats.');
 });
-
 router.delete('/', (req, res) => {
-    console.log(req)
-    res.send('From this endpoint you can delete cats.')
+    res.send('From this endpoint you can delete cats.');
 });
 
 module.exports = router;
