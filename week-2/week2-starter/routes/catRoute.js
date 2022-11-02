@@ -4,8 +4,13 @@
 const express = require("express");
 const router = express.Router();
 const catController = require("../controllers/catController");
+const multer = require('multer')
 
-router.get("/", catController.cat_list_get);
+const upload = multer({dest: 'uploads/'})
+
+router.get("/", catController.getCats);
+
+router.post("/" )
 
 router.get('/', (req, res) => {
     res.send('From this endpoint you can get cats.')
