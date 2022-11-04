@@ -28,7 +28,7 @@ const createCat = async (req, res) => {
     console.log(catInfo);
 };
 
-const modifyCat = async (req, res) => {
+const cat_update_put = async (req, res) => {
     const catInfo = req.body
     if (catInfo) {
         res.json(catInfo);
@@ -39,12 +39,21 @@ const modifyCat = async (req, res) => {
     console.log(catInfo);
 };
 
-const deleteCat = (req, res) => {};
+const deleteCat = async (req, res) => {
+    const catInfo = req.body
+    if (catInfo) {
+        res.json(catInfo);
+        await catModel.deleteCat(catInfo);
+    } else {
+        res.sendStatus(404);
+    }
+    console.log(catInfo);
+};
 
 module.exports = {
     getCat,
     getCats,
-    modifyCat,
+    cat_update_put,
     createCat,
     deleteCat
 };

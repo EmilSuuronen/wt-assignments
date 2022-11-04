@@ -37,8 +37,18 @@ const addCat = async (catInfo) => {
 
 const updateCat = async (catInfo) => {
   try {
-    await promisePool.query("UPDATE wop_cat SET (cat_id = ?, name = ?, weight = ?, owner = ?, birthdate = ?) VALUES (?,?,?,?,?)",
-        [catInfo.id, catInfo.name, catInfo.weight, catInfo.owner, catInfo.birthdate] );
+    await promisePool.query("UPDATE wop_cat SET (cat_id = ?, name = ?, weight = ?, owner = ?, birthdate = ?) WHERE (cat_id = ?) VALUES (?,?,?,?,?)",
+        [catInfo.name, catInfo.weight, catInfo.owner, catInfo.birthdate, catInfo.id] );
+  } catch (e) {
+    console.error("error", e.message);
+    // res.status(500).send(e.message)
+  }
+}
+
+const deleteCat = async (catInfo) => {
+  try {
+    await promisePool.query("DELETE FROM wop_cat WHERE (cat_id = ?) VALUES (?)",
+        [catInfo.id]);
   } catch (e) {
     console.error("error", e.message);
     // res.status(500).send(e.message)
@@ -49,5 +59,6 @@ module.exports = {
   getAllCats,
   getCatById,
   addCat,
-  updateCat
+  updateCat,
+  deleteCat
 };
