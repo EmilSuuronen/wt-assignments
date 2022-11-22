@@ -30,6 +30,7 @@ const createUser = async (req, res) => {
 };
 
 const modifyUser = (req, res) => {};
+
 const deleteUser = (req, res) => {};
 
 module.exports = {

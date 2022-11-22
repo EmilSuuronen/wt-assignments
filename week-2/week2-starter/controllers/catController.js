@@ -37,7 +37,7 @@ const createCat = async (req, res) => {
 const cat_update_put = async (req, res) => {
     const catInfo = req.body
     if (req.params.catId) {
-        cat.id = req.params.catId;
+        catInfo.id = req.params.catId;
     }
     const result = await catModel.updateCat(catInfo, res);
     if (result.affectedRows > 0) {
@@ -51,7 +51,7 @@ const deleteCat = async (req, res) => {
     const result = await catModel.deleteCat(req.params.catId, res);
     console.log('cat deleted', result)
     if (result.affectedRows > 0) {
-        res.json({message: 'cat deleted'});
+        res.json({message: 'cat deleted!'});
     } else {
         res.status(404).json({message: 'cat was already deleted'});
     }
