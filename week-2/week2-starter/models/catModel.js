@@ -6,7 +6,7 @@ const promisePool = pool.promise();
 const getAllCats = async (res) => {
   try {
     // TODO: do the LEFT (or INNER) JOIN to get owner's name as ownername (from wop_user table).
-    const [rows] = await promisePool.query("SELECT * FROM wop_cat");
+    const [rows] = await promisePool.query("SELECT cat_id, wop_cat.name, owner, filename, birthdate, wop_user.name AS ownername FROM wop_cat JOIN wop_user ON wop_cat.owner = wop_user.user_id");
     return rows;
   } catch (e) {
     console.error("error", e.message);
@@ -37,8 +37,10 @@ const addCat = async (catInfo) => {
 
 const updateCat = async (catInfo) => {
   try {
+    const [rows] =
     await promisePool.query("UPDATE wop_cat SET (cat_id = ?, name = ?, weight = ?, owner = ?, birthdate = ?) WHERE (cat_id = ?) VALUES (?,?,?,?,?)",
         [catInfo.name, catInfo.weight, catInfo.owner, catInfo.birthdate, catInfo.id] );
+    return rows;
   } catch (e) {
     console.error("error", e.message);
     // res.status(500).send(e.message)
@@ -47,8 +49,10 @@ const updateCat = async (catInfo) => {
 
 const deleteCat = async (catInfo) => {
   try {
-    await promisePool.query("DELETE FROM wop_cat WHERE (cat_id = ?) VALUES (?)",
+    const [rows] =
+    await promisePool.query("DELETE FROM wop_cat WHERE cat_id = ? [catId]",
         [catInfo.id]);
+    return rows;
   } catch (e) {
     console.error("error", e.message);
     // res.status(500).send(e.message)

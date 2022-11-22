@@ -1,6 +1,7 @@
 'use strict';
 const catModel = require('../models/catModel');
 const userModel = require("../models/userModel");
+const {validationResult} = require('express-validator');
 
 const getCats = async (req, res) => {
     const cats = await catModel.getAllCats(res);
@@ -8,7 +9,6 @@ const getCats = async (req, res) => {
 };
 
 const getCat = async (req, res) => {
-    // choose only one object with matching id
     const cat = await catModel.getCatById(res, req.params.catId);
     if (cat) {
         res.json(cat);
@@ -18,36 +18,43 @@ const getCat = async (req, res) => {
 };
 
 const createCat = async (req, res) => {
-    const catInfo = req.body
-    if (catInfo) {
-        res.json(catInfo);
-        await catModel.addCat(catInfo);
-    } else {
-        res.sendStatus(404);
+    const errors = validationResult(req);
+    if (!req.file) {
+        res.status(400).json({message: 'no valid file found!'});
     }
-    console.log(catInfo);
+    else if (errors.isEmpty()) {
+        const catInfo = req.body;
+        catInfo.filename = req.file.filename;
+        console.log('new cat created:', catInfo);
+        const catId = await catModel.addCat(catInfo, res);
+        res.status(201).json({message: 'cat created', catId});
+    } else {
+        console.log('validation errors', errors);
+        res.status(400).json({message: 'cat creation failed',
+            errors: errors.array()});    }
 };
 
 const cat_update_put = async (req, res) => {
     const catInfo = req.body
-    if (catInfo) {
-        res.json(catInfo);
-        await catModel.updateCat(catInfo);
-    } else {
-        res.sendStatus(404);
+    if (req.params.catId) {
+        cat.id = req.params.catId;
     }
-    console.log(catInfo);
+    const result = await catModel.updateCat(catInfo, res);
+    if (result.affectedRows > 0) {
+        res.json({message: 'cat modified: ' + catInfo.id});
+    } else {
+        res.status(404).json({message: 'nothing changed'});
+    }
 };
 
 const deleteCat = async (req, res) => {
-    const catInfo = req.body
-    if (catInfo) {
-        res.json(catInfo);
-        await catModel.deleteCat(catInfo);
+    const result = await catModel.deleteCat(req.params.catId, res);
+    console.log('cat deleted', result)
+    if (result.affectedRows > 0) {
+        res.json({message: 'cat deleted'});
     } else {
-        res.sendStatus(404);
+        res.status(404).json({message: 'cat was already deleted'});
     }
-    console.log(catInfo);
 };
 
 module.exports = {
