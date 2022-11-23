@@ -1,8 +1,8 @@
 'use strict';
 const userModel =  require('../models/userModel');
-const catModel = require("../models/catModel");
-
 const users = userModel.users;
+
+
 
 const getUsers = async (req, res) => {
     const users = await userModel.getAllUsers(res);

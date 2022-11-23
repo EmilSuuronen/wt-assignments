@@ -1,6 +1,5 @@
 'use strict';
 const catModel = require('../models/catModel');
-const userModel = require("../models/userModel");
 const {validationResult} = require('express-validator');
 
 const getCats = async (req, res) => {
