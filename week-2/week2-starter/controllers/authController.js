@@ -3,10 +3,6 @@ const jwt = require("jsonwebtoken");
 const passport = require("passport");
 require("dotenv").config();
 
-const {login} = require("../controllers/authController");
-
-const controller = require("../controllers/userController");
-
 const login = (req, res) => {
     passport.authenticate('local', {session: false}, (err, user, info) => {
         if (err || !user) {

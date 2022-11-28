@@ -29,6 +29,10 @@ const createUser = async (req, res) => {
     console.log(userInfo);
 };
 
+/*const checkToken = (req, res) => {
+    res.json((user: req.user));
+} */
+
 const modifyUser = (req, res) => {};
 
 const deleteUser = (req, res) => {};
