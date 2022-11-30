@@ -1,5 +1,5 @@
 "use strict";
-const mysql = require("mysql2");
+/* const mysql = require("mysql2");
 require("dotenv").config();
 
 const pool = mysql.createPool({
@@ -14,3 +14,4 @@ const pool = mysql.createPool({
 
 module.exports = pool;
 
+*/
